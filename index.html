@@ -218,8 +218,6 @@
             width: 100%;
             background: #111;
             padding: 10px;
-            display: flex;
-            /* will override when shown */
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
@@ -620,7 +618,15 @@
             const seconds = Math.floor(time % 60);
             return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
         }
+        const introAudio = document.getElementById('introAudio');
+        let introPlayed = false;
 
+        document.addEventListener('click', () => {
+            if (!introPlayed) {
+                introAudio.play().catch(err => console.log('User interaction needed to play audio', err));
+                introPlayed = true;
+            }
+        });
     </script>
 
 </body>
