@@ -211,15 +211,20 @@
         /* ---------------- STICKY MUSIC PLAYER ---------------- */
 
         .music-player {
+            display: none;
+            /* hide by default */
             position: fixed;
             bottom: 0;
             width: 100%;
             background: #111;
             padding: 10px;
             display: flex;
+            /* will override when shown */
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .music-player button {
@@ -339,7 +344,7 @@
 <body>
 
     <!-- Background Intro Audio -->
-    <!-- <audio id="introAudio" src="intro.mp3"></audio> -->
+    <audio id="introAudio" src="intro.mp3"></audio>
 
     <!-- HERO -->
     <section class="hero">
@@ -572,6 +577,9 @@
             isPlaying = true;
             playPauseBtn.innerText = "⏸";
             nowPlaying.innerText = "Now Playing: " + name;
+
+            // Show music player
+            document.querySelector('.music-player').style.display = 'flex';
         }
 
         /* PLAY / PAUSE TOGGLE */
