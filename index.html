@@ -124,22 +124,65 @@
 
         .song-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
         }
 
         .song-card {
             background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
+            padding: 10px;
             border-radius: 15px;
             cursor: pointer;
-            transition: .4s;
+            transition: 0.4s;
             backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .song-card img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .song-card span {
+            font-size: 1rem;
+            color: white;
+            font-weight: 500;
         }
 
         .song-card:hover {
             transform: scale(1.05);
             background: #ff00cc;
+        }
+
+        .song-card:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #ff00cc;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .song-card span {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .song-list {
+                grid-template-columns: 1fr;
+            }
+
+            .song-card img {
+                width: 90%;
+            }
+
+            .song-card span {
+                font-size: 0.9rem;
+            }
         }
 
         /* ---------------- GALLERY ---------------- */
@@ -162,7 +205,6 @@
         }
 
         /* ---------------- MEMBERS ---------------- */
-
         .members {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -170,15 +212,16 @@
         }
 
         .member-card {
-            perspective: 1000px;
+            perspective: 1200px;
             cursor: pointer;
         }
 
         .card-inner {
             position: relative;
             width: 100%;
-            height: 350px;
-            transition: transform .8s;
+            min-height: 400px;
+            /* tall enough for full back text */
+            transition: transform 0.8s;
             transform-style: preserve-3d;
         }
 
@@ -193,19 +236,78 @@
             height: 100%;
             border-radius: 20px;
             backface-visibility: hidden;
-            padding: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
-        .card-front {
-            background: rgba(255, 255, 255, 0.1);
+        .card-front img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+        }
+
+        .card-front h3 {
+            flex: 1;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.1rem;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
         }
 
         .card-back {
             background: #ff00cc;
+            color: white;
+            padding: 15px;
             transform: rotateY(180deg);
+            text-align: center;
+            overflow-y: auto;
+            gap: 5px;
+            font-size: 0.95rem;
+        }
+
+        /* Scrollbar for back if content overflows */
+        .card-back::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .card-back::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .card-inner {
+                min-height: 350px;
+            }
+
+            .card-front h3 {
+                font-size: 1rem;
+                padding: 8px;
+            }
+
+            .card-back {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card-inner {
+                min-height: 320px;
+            }
+
+            .card-front h3 {
+                font-size: 0.9rem;
+                padding: 6px;
+            }
+
+            .card-back {
+                font-size: 0.85rem;
+            }
         }
 
         /* ---------------- STICKY MUSIC PLAYER ---------------- */
@@ -358,10 +460,22 @@
     <section class="section">
         <h2>Our Songs</h2>
         <div class="song-list">
-            <div class="song-card" onclick="playSong('song1.mp3','The Darknight Girls')">The Darknight Girls</div>
-            <div class="song-card" onclick="playSong('song2.mp3','The Darknight Girls Remake')">Anthem Remake</div>
-            <div class="song-card" onclick="playSong('song3.mp3','Pretty Mafia')">Pretty Mafia</div>
-            <div class="song-card" onclick="playSong('song4.mp3','Pretty Mafia Remake')">Pretty Mafia Remake</div>
+            <div class="song-card" onclick="playSong('song1.mp3','The Darknight Girls')">
+                <img src="cover1.png" alt="The Darknight Girls Cover">
+                <span>The Darknight Girls</span>
+            </div>
+            <div class="song-card" onclick="playSong('song2.mp3','The Darknight Girls Remake')">
+                <img src="cover2.png" alt="Anthem Remake Cover">
+                <span>Anthem Remake</span>
+            </div>
+            <div class="song-card" onclick="playSong('song3.mp3','Pretty Mafia')">
+                <img src="cover3.png" alt="Pretty Mafia Cover">
+                <span>Pretty Mafia</span>
+            </div>
+            <div class="song-card" onclick="playSong('song4.mp3','Pretty Mafia Remake')">
+                <img src="cover4.png" alt="Pretty Mafia Remake Cover">
+                <span>Pretty Mafia Remake</span>
+            </div>
         </div>
     </section>
 
@@ -401,14 +515,15 @@
         </div>
     </section>
 
-    <!-- MEMBERS -->
     <section class="section">
         <h2>Band Members</h2>
         <div class="members">
 
+            <!-- Member 1 -->
             <div class="member-card">
                 <div class="card-inner">
                     <div class="card-front">
+                        <img src="model1.png" alt="Bea">
                         <h3>Bea | Owl</h3>
                     </div>
                     <div class="card-back">
@@ -422,9 +537,12 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Member 2 -->
             <div class="member-card">
                 <div class="card-inner">
                     <div class="card-front">
+                        <img src="model2.png" alt="Mony">
                         <h3>Mony | Bat</h3>
                     </div>
                     <div class="card-back">
@@ -437,9 +555,12 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Member 3 -->
             <div class="member-card">
                 <div class="card-inner">
                     <div class="card-front">
+                        <img src="model3.png" alt="Chloe">
                         <h3>Chloe | Chameleon</h3>
                     </div>
                     <div class="card-back">
@@ -452,9 +573,12 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Member 4 -->
             <div class="member-card">
                 <div class="card-inner">
                     <div class="card-front">
+                        <img src="model4.png" alt="Hanna">
                         <h3>Hanna | Bcedgie</h3>
                     </div>
                     <div class="card-back">
@@ -468,9 +592,12 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Member 5 -->
             <div class="member-card">
                 <div class="card-inner">
                     <div class="card-front">
+                        <img src="model5.png" alt="Jenna">
                         <h3>Jenna | Brown Bear</h3>
                     </div>
                     <div class="card-back">
@@ -484,9 +611,12 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Member 6 -->
             <div class="member-card">
                 <div class="card-inner">
                     <div class="card-front">
+                        <img src="model6.png" alt="Nicki">
                         <h3>Nicki | Capybara</h3>
                     </div>
                     <div class="card-back">
@@ -500,9 +630,12 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Member 7 -->
             <div class="member-card">
                 <div class="card-inner">
                     <div class="card-front">
+                        <img src="model7.png" alt="Soonie">
                         <h3>Soonie | Cat</h3>
                     </div>
                     <div class="card-back">
@@ -516,9 +649,12 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Member 8 -->
             <div class="member-card">
                 <div class="card-inner">
                     <div class="card-front">
+                        <img src="model8.png" alt="Iveen">
                         <h3>Iveen | Racoon</h3>
                     </div>
                     <div class="card-back">
