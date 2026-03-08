@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Darknight Girls</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ---------------- GLOBAL ---------------- */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* ---------------- HERO SECTION ---------------- */
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, #ff00cc, transparent 60%);
+            animation: pulseBg 6s infinite alternate;
+            opacity: 0.3;
+        }
+
+        @keyframes pulseBg {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.2);
+            }
+        }
+
+        .left-text {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 20px #ff00cc;
+        }
+
+        .typing {
+            border-right: 3px solid white;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 4s steps(30, end), blink .7s infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent
+            }
+        }
+
+        .logo img {
+            width: 350px;
+            border-radius: 20px;
+            box-shadow: 0 0 40px #ff00cc;
+            animation: floatLogo 4s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-20px)
+            }
+        }
+
+        /* ---------------- SONG SECTION ---------------- */
+
+        .section {
+            padding: 100px 10%;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px #ff00cc;
+        }
+
+        .song-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .song-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.4s;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .song-card img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .song-card span {
+            font-size: 1rem;
+            color: white;
+            font-weight: 500;
+        }
+
+        .song-card:hover {
+            transform: scale(1.05);
+            background: #ff00cc;
+        }
+
+        .song-card:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #ff00cc;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .song-card span {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .song-list {
+                grid-template-columns: 1fr;
+            }
+
+            .song-card img {
+                width: 90%;
+            }
+
+            .song-card span {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ---------------- GALLERY ---------------- */
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 15px;
+            transition: .5s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #ff00cc;
+        }
+
+        /* ---------------- MEMBERS ---------------- */
+        .members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .member-card {
+            perspective: 1200px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            min-height: 400px;
+            /* tall enough for full back text */
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .member-card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            backface-visibility: hidden;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-front img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+        }
+
+        .card-front h3 {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.1rem;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .card-back {
+            background: #ff00cc;
+            color: white;
+            padding: 15px;
+            transform: rotateY(180deg);
+            text-align: center;
+            overflow-y: auto;
+            gap: 5px;
+            font-size: 0.95rem;
+        }
+
+        /* Scrollbar for back if content overflows */
+        .card-back::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .card-back::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .card-inner {
+                min-height: 350px;
+            }
+
+            .card-front h3 {
+                font-size: 1rem;
+                padding: 8px;
+            }
+
+            .card-back {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card-inner {
+                min-height: 320px;
+            }
+
+            .card-front h3 {
+                font-size: 0.9rem;
+                padding: 6px;
+            }
+
+            .card-back {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ---------------- STICKY MUSIC PLAYER ---------------- */
+
+        .music-player {
+            display: none;
+            /* hide by default */
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #111;
+            padding: 10px;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .music-player button {
+            background: #ff00cc;
+            border: none;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        .music-player {
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .player-center {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 50%;
+        }
+
+        #progressBar {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        #volumeControl {
+            cursor: pointer;
+        }
+
+        /* ---------------- RESPONSIVE ---------------- */
+
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                justify-content: center;
+                padding: 50px 5%;
+                gap: 30px;
+                text-align: center;
+            }
+
+            .logo img {
+                width: 250px;
+            }
+
+            .left-text {
+                font-size: 2.5rem;
+            }
+
+            .player-center {
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+            }
+
+            #progressBar {
+                width: 80%;
+            }
+
+            .section {
+                padding: 60px 5%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 40px 5%;
+            }
+
+            .left-text {
+                font-size: 2rem;
+            }
+
+            .logo img {
+                width: 200px;
+            }
+
+            .song-list,
+            .gallery,
+            .members {
+                grid-template-columns: 1fr;
+            }
+
+            .music-player {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
+            }
+
+            .player-left,
+            .player-center,
+            .player-right {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .player-center {
+                gap: 5px;
+            }
+
+            #progressBar {
+                width: 90%;
+            }
+
+            #volumeControl {
+                width: 80%;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Intro Audio -->
+    <audio id="introAudio" src="intro.mp3"></audio>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="left-text typing">
+            The Darknight Girls
+        </div>
+        <div class="logo">
+            <img src="logo.png" alt="Band Logo">
+        </div>
+    </section>
+
+    <!-- SONGS -->
+    <section class="section">
+        <h2>Our Songs</h2>
+        <div class="song-list">
+            <div class="song-card" onclick="playSong('song1.mp3','The Darknight Girls')">
+                <img src="cover1.png" alt="The Darknight Girls Cover">
+                <span>The Darknight Girls</span>
+            </div>
+            <div class="song-card" onclick="playSong('song2.mp3','The Darknight Girls Remake')">
+                <img src="cover2.png" alt="Anthem Remake Cover">
+                <span>Anthem Remake</span>
+            </div>
+            <div class="song-card" onclick="playSong('song3.mp3','Pretty Mafia')">
+                <img src="cover3.png" alt="Pretty Mafia Cover">
+                <span>Pretty Mafia</span>
+            </div>
+            <div class="song-card" onclick="playSong('song4.mp3','Pretty Mafia Remake')">
+                <img src="cover4.png" alt="Pretty Mafia Remake Cover">
+                <span>Pretty Mafia Remake</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="section">
+        <h2>K-Pop Collages</h2>
+        <div class="gallery">
+            <img src="collage1.jpeg">
+            <img src="collage2.jpeg">
+            <img src="collage3.jpeg">
+            <img src="collage4.jpeg">
+            <img src="collage5.jpeg">
+            <img src="collage6.jpeg">
+            <img src="collage7.jpeg">
+            <img src="collage8.jpeg">
+            <img src="collage9.jpeg">
+            <img src="collage10.jpeg">
+            <img src="collage11.jpeg">
+            <img src="collage12.jpeg">
+            <img src="collage13.jpeg">
+            <img src="collage14.jpeg">
+            <img src="collage15.jpeg">
+            <img src="collage16.jpeg">
+            <img src="collage17.jpeg">
+            <img src="collage18.jpeg">
+            <img src="collage19.jpeg">
+            <img src="collage20.jpeg">
+            <img src="collage21.jpeg">
+            <img src="collage22.jpeg">
+            <img src="collage23.jpeg">
+            <img src="collage24.jpeg">
+            <img src="collage25.jpeg">
+            <img src="collage26.jpeg">
+            <img src="collage27.jpeg">
+            <img src="collage28.jpeg">
+
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Band Members</h2>
+        <div class="members">
+
+            <!-- Member 1 -->
+            <div class="member-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="model1.png" alt="Bea">
+                        <h3>Bea | Leader</h3>
+                    </div>
+                    <div class="card-back">
+                        <p>Age: 18</p>
+                        <p> Owl | German</p>
+                        <p>Fav Song: Universe</p>
+                        <p>Brown Eyes | Model for Pandora</p>
+                        <p>Still Makes Funny Stupid Things</p>
+                        <p>Mother Of Group | Short Dark Purple Hair</p>
+                        <p>Speaks: Korean, German, English, Japanese</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 2 -->
+            <div class="member-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="model2.png" alt="Mony">
+                        <h3>Mony | Main Dancer</h3>
+                    </div>
+                    <div class="card-back">
+                        <p>Age: 17</p>
+                        <p> Bat | Makes Chores | Korean</p>
+                        <p>Brown Eyes | Model for Louis Vuitton</p>
+                        <p>Easy To Annoy | Touches Boobs And Asses From Members</p>
+                        <p>Shoulder-Length Black Hair</p>
+                        <p>Speaks: Korean, English, Japanese</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 3 -->
+            <div class="member-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="model3.png" alt="Chloe">
+                        <h3>Chloe | Song Writer</h3>
+                    </div>
+                    <div class="card-back">
+                        <p>Age: 17</p>
+                        <p>Chameleon | Rapper | Korean</p>
+                        <p>Fav Song: Glow</p>
+                        <p>Blue Eyes | Model for Prada</p>
+                        <p>Blonde Hair Ponytail Always | Loves To Wear Colourful Lenses</p>
+                        <p>Speaks: Korean, English, Japanese</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 4 -->
+            <div class="member-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="model4.png" alt="Hanna">
+                        <h3>Hanna | Singer </h3>
+                    </div>
+                    <div class="card-back">
+                        <p>Age: 16</p>
+                        <p>Bcedgie | Song writer | Korean</p>
+                        <p>Fav Song: Sparkle</p>
+                        <p>Light Brown Eyes | Model for Gucci</p>
+                        <p>Little Daram Queen</p>
+                        <p>Short Blue/Blonde Shoulder-Length Hair | Colourful Lenses</p>
+                        <p>Speaks: Korean, English</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 5 -->
+            <div class="member-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="model5.png" alt="Jenna">
+                        <h3>Jenna | Rapper </h3>
+                    </div>
+                    <div class="card-back">
+                        <p>Age: 16</p>
+                        <p>Brown Bear | Korean/American</p>
+                        <p>Fav Song: Shine Bright</p>
+                        <p>Model for Converse</p>
+                        <p>Loves To Sing | Spirited</p>
+                        <p>Brown Hair Loose Shoulder-Length Hair</p>
+                        <p>Speaks: Korean, English</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 6 -->
+            <div class="member-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="model6.png" alt="Nicki">
+                        <h3>Nicki | Singer </h3>
+                    </div>
+                    <div class="card-back">
+                        <p>Age: 15</p>
+                        <p>Capybara Rapper | Songwriter | German</p>
+                        <p>Fav Song: Darkness</p>
+                        <p>Model for Tom Tailor</p>
+                        <p>Loves Baggy Clothes | Stands Up For Other | Wears A Translator</p>
+                        <p>Blonde Hair, Waist-Length | Blue Eyes | Deep, High-Range Voice</p>
+                        <p>Speaks: German, English</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 7 -->
+            <div class="member-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="model7.png" alt="Soonie">
+                        <h3>Soonie | Rapper</h3>
+                    </div>
+                    <div class="card-back">
+                        <p>Age: 15</p>
+                        <p>Cat | Korean/Italian</p>
+                        <p>Fav Song: Myself</p>
+                        <p>Model for Ralph Lauren</p>
+                        <p>Lovely/Complex | Sadistic | Lives To Laugh </p>
+                        <p>Light Brown Hair Little Longer Than Shoulder</p>
+                        <p>Speaks: Korean, English, German, Italian, Japanese</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 8 -->
+            <div class="member-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="model8.png" alt="Iveen">
+                        <h3>Iveen | Singer </h3>
+                    </div>
+                    <div class="card-back">
+                        <p>Age: 15</p>
+                        <p>Racoon | Korean</p>
+                        <p>Fav Song: Everywhere</p>
+                        <p>Model for Converse</p>
+                        <p>Youngest | Childish | Little Ears | Playful</p>
+                        <p>Red Hair | Green Eyes</p>
+                        <p>Speaks: Korean, English</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Sticky Music Player -->
+    <div class="music-player">
+        <div class="player-left">
+            <span id="nowPlaying">No song playing</span>
+        </div>
+
+        <div class="player-center">
+            <button id="playPauseBtn">▶</button>
+            <span id="currentTime">0:00</span>
+
+            <input type="range" id="progressBar" value="0" min="0" max="100">
+
+            <span id="duration">0:00</span>
+        </div>
+
+        <div class="player-right">
+            🔊
+            <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="1">
+        </div>
+    </div>
+    <script>
+
+        let audio = new Audio();
+        let isPlaying = false;
+
+        const playPauseBtn = document.getElementById("playPauseBtn");
+        const progressBar = document.getElementById("progressBar");
+        const volumeControl = document.getElementById("volumeControl");
+        const currentTimeEl = document.getElementById("currentTime");
+        const durationEl = document.getElementById("duration");
+        const nowPlaying = document.getElementById("nowPlaying");
+
+        /* PLAY SONG FUNCTION */
+        function playSong(src, name) {
+            audio.src = src;
+            audio.play();
+            isPlaying = true;
+            playPauseBtn.innerText = "⏸";
+            nowPlaying.innerText = "Now Playing: " + name;
+
+            // Show music player
+            document.querySelector('.music-player').style.display = 'flex';
+        }
+
+        /* PLAY / PAUSE TOGGLE */
+        playPauseBtn.addEventListener("click", () => {
+            if (isPlaying) {
+                audio.pause();
+                playPauseBtn.innerText = "▶";
+            } else {
+                audio.play();
+                playPauseBtn.innerText = "⏸";
+            }
+            isPlaying = !isPlaying;
+        });
+
+        /* UPDATE PROGRESS BAR */
+        audio.addEventListener("timeupdate", () => {
+            const progressPercent = (audio.currentTime / audio.duration) * 100;
+            progressBar.value = progressPercent;
+
+            currentTimeEl.innerText = formatTime(audio.currentTime);
+            durationEl.innerText = formatTime(audio.duration);
+        });
+
+        /* CLICK TO SEEK */
+        progressBar.addEventListener("input", () => {
+            audio.currentTime = (progressBar.value / 100) * audio.duration;
+        });
+
+        /* VOLUME CONTROL */
+        volumeControl.addEventListener("input", () => {
+            audio.volume = volumeControl.value;
+        });
+
+        /* FORMAT TIME FUNCTION */
+        function formatTime(time) {
+            if (isNaN(time)) return "0:00";
+            const minutes = Math.floor(time / 60);
+            const seconds = Math.floor(time % 60);
+            return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        }
+        const introAudio = document.getElementById('introAudio');
+        let introPlayed = false;
+
+        document.addEventListener('click', () => {
+            if (!introPlayed) {
+                introAudio.play().catch(err => console.log('User interaction needed to play audio', err));
+                introPlayed = true;
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,770 +1,1071 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Darknight Girls</title>
-    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500;700&display=swap"
-        rel="stylesheet">
-
-    <style>
-        /* ---------------- GLOBAL ---------------- */
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: white;
-            overflow-x: hidden;
-        }
-
-        /* ---------------- HERO SECTION ---------------- */
-
-        .hero {
-            height: 100vh;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 10%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, #ff00cc, transparent 60%);
-            animation: pulseBg 6s infinite alternate;
-            opacity: 0.3;
-        }
-
-        @keyframes pulseBg {
-            from {
-                transform: scale(1);
-            }
-
-            to {
-                transform: scale(1.2);
-            }
-        }
-
-        .left-text {
-            font-size: 3rem;
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
-            text-shadow: 0 0 20px #ff00cc;
-        }
-
-        .typing {
-            border-right: 3px solid white;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: typing 4s steps(30, end), blink .7s infinite;
-        }
-
-        @keyframes typing {
-            from {
-                width: 0
-            }
-
-            to {
-                width: 100%
-            }
-        }
-
-        @keyframes blink {
-            50% {
-                border-color: transparent
-            }
-        }
-
-        .logo img {
-            width: 350px;
-            border-radius: 20px;
-            box-shadow: 0 0 40px #ff00cc;
-            animation: floatLogo 4s ease-in-out infinite;
-        }
-
-        @keyframes floatLogo {
-
-            0%,
-            100% {
-                transform: translateY(0)
-            }
-
-            50% {
-                transform: translateY(-20px)
-            }
-        }
-
-        /* ---------------- SONG SECTION ---------------- */
-
-        .section {
-            padding: 100px 10%;
-        }
-
-        .section h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 40px;
-            text-shadow: 0 0 10px #ff00cc;
-        }
-
-        .song-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-        }
-
-        .song-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.4s;
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .song-card img {
-            width: 100%;
-            border-radius: 15px;
-            margin-bottom: 10px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .song-card span {
-            font-size: 1rem;
-            color: white;
-            font-weight: 500;
-        }
-
-        .song-card:hover {
-            transform: scale(1.05);
-            background: #ff00cc;
-        }
-
-        .song-card:hover img {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px #ff00cc;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .song-card span {
-                font-size: 0.95rem;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .song-list {
-                grid-template-columns: 1fr;
-            }
-
-            .song-card img {
-                width: 90%;
-            }
-
-            .song-card span {
-                font-size: 0.9rem;
-            }
-        }
-
-        /* ---------------- GALLERY ---------------- */
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .gallery img {
-            width: 100%;
-            border-radius: 15px;
-            transition: .5s;
-        }
-
-        .gallery img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px #ff00cc;
-        }
-
-        /* ---------------- MEMBERS ---------------- */
-        .members {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .member-card {
-            perspective: 1200px;
-            cursor: pointer;
-        }
-
-        .card-inner {
-            position: relative;
-            width: 100%;
-            min-height: 400px;
-            /* tall enough for full back text */
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
-        }
-
-        .member-card:hover .card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .card-front,
-        .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 20px;
-            backface-visibility: hidden;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-front img {
-            width: 100%;
-            height: 70%;
-            object-fit: cover;
-        }
-
-        .card-front h3 {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 1.1rem;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        .card-back {
-            background: #ff00cc;
-            color: white;
-            padding: 15px;
-            transform: rotateY(180deg);
-            text-align: center;
-            overflow-y: auto;
-            gap: 5px;
-            font-size: 0.95rem;
-        }
-
-        /* Scrollbar for back if content overflows */
-        .card-back::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .card-back::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 5px;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 1024px) {
-            .card-inner {
-                min-height: 350px;
-            }
-
-            .card-front h3 {
-                font-size: 1rem;
-                padding: 8px;
-            }
-
-            .card-back {
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .card-inner {
-                min-height: 320px;
-            }
-
-            .card-front h3 {
-                font-size: 0.9rem;
-                padding: 6px;
-            }
-
-            .card-back {
-                font-size: 0.85rem;
-            }
-        }
-
-        /* ---------------- STICKY MUSIC PLAYER ---------------- */
-
-        .music-player {
-            display: none;
-            /* hide by default */
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #111;
-            padding: 10px;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .music-player button {
-            background: #ff00cc;
-            border: none;
-            padding: 8px 15px;
-            color: white;
-            cursor: pointer;
-            border-radius: 10px;
-        }
-
-        .music-player {
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .player-center {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 50%;
-        }
-
-        #progressBar {
-            flex: 1;
-            cursor: pointer;
-        }
-
-        #volumeControl {
-            cursor: pointer;
-        }
-
-        /* ---------------- RESPONSIVE ---------------- */
-
-        @media (max-width: 1024px) {
-            .hero {
-                flex-direction: column;
-                justify-content: center;
-                padding: 50px 5%;
-                gap: 30px;
-                text-align: center;
-            }
-
-            .logo img {
-                width: 250px;
-            }
-
-            .left-text {
-                font-size: 2.5rem;
-            }
-
-            .player-center {
-                width: 100%;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 5px;
-            }
-
-            #progressBar {
-                width: 80%;
-            }
-
-            .section {
-                padding: 60px 5%;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .hero {
-                padding: 40px 5%;
-            }
-
-            .left-text {
-                font-size: 2rem;
-            }
-
-            .logo img {
-                width: 200px;
-            }
-
-            .song-list,
-            .gallery,
-            .members {
-                grid-template-columns: 1fr;
-            }
-
-            .music-player {
-                flex-direction: column;
-                gap: 10px;
-                padding: 15px;
-            }
-
-            .player-left,
-            .player-center,
-            .player-right {
-                width: 100%;
-                justify-content: center;
-                text-align: center;
-            }
-
-            .player-center {
-                gap: 5px;
-            }
-
-            #progressBar {
-                width: 90%;
-            }
-
-            #volumeControl {
-                width: 80%;
-                margin-top: 5px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Darknight Girls</title>
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:ital,wght@0,100;0,300;0,700;0,900;1,300&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <style>
+    :root {
+      --blue:       #1a8cff;
+      --blue-deep:  #0055cc;
+      --mint:       #00f5c8;
+      --mint-dim:   #00b89a;
+      --purple:     #9b5de5;
+      --purple-deep:#6a0dad;
+      --bg:         #04040f;
+      --bg2:        #080820;
+      --glass:      rgba(255,255,255,0.04);
+      --glass-b:    rgba(255,255,255,0.10);
+      --white:      #ffffff;
+      --off-white:  #c8d8ff;
+    }
+
+    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    #cursor {
+      position: fixed; width: 14px; height: 14px;
+      background: var(--mint); border-radius: 50%;
+      pointer-events: none; z-index: 99999;
+      transform: translate(-50%,-50%);
+      mix-blend-mode: screen;
+      transition: transform .15s, background .2s;
+    }
+    #cursor-trail {
+      position: fixed; width: 36px; height: 36px;
+      border: 1.5px solid var(--purple);
+      border-radius: 50%; pointer-events: none; z-index: 99998;
+      transform: translate(-50%,-50%);
+      opacity: .5;
+      transition: all .35s ease;
+    }
+
+    /* ── CANVAS STARS ── */
+    #stars-canvas {
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
+      pointer-events:none; z-index:0;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::after {
+      content:'';
+      position:fixed; inset:0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E") repeat;
+      opacity: .025; pointer-events:none; z-index:1;
+    }
+
+    section { position: relative; z-index: 2; }
+
+    /* ═══════════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 500;
+      padding: 18px 6%;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(4,4,15,.55);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(0,245,200,.08);
+    }
+    .nav-logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.4rem; font-weight: 700;
+      letter-spacing: .12em;
+      background: linear-gradient(90deg, var(--mint), var(--blue), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--off-white);
+      font-size: .85rem; letter-spacing: .12em; text-transform: uppercase;
+      font-family: 'Rajdhani', sans-serif; font-weight: 600;
+      position: relative; transition: color .3s;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:-4px; left:0;
+      width:0; height:1.5px;
+      background: linear-gradient(90deg, var(--mint), var(--purple));
+      transition: width .35s ease;
+    }
+    .nav-links a:hover { color: var(--mint); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ═══════════════════════════════════
+       HERO
+    ═══════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 6%;
+      position: relative; overflow: hidden;
+    }
+
+    /* Animated gradient orbs */
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); pointer-events: none;
+    }
+    .orb-1 { width:620px; height:620px; background:rgba(26,140,255,.18); top:-10%; left:-10%; }
+    .orb-2 { width:500px; height:500px; background:rgba(155,93,229,.22); bottom:-5%; right:-8%; }
+    .orb-3 { width:380px; height:380px; background:rgba(0,245,200,.14); top:30%; left:35%; }
+
+    /* Grid lines bg */
+    .hero-grid {
+      position:absolute; inset:0; pointer-events:none;
+      background-image:
+        linear-gradient(rgba(0,245,200,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,200,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-content {
+      max-width: 700px;
+      position: relative; z-index: 2;
+    }
+    .hero-kicker {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: .8rem; letter-spacing: .35em; text-transform: uppercase;
+      color: var(--mint); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+      opacity: 0;
+    }
+    .hero-kicker::before {
+      content:''; display:inline-block;
+      width: 40px; height: 1px;
+      background: var(--mint);
+    }
+    .hero-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 700; line-height: .95;
+      letter-spacing: -.01em;
+      opacity: 0;
+    }
+    .hero-title .line { display: block; overflow: hidden; }
+    .hero-title .word-dark { color: var(--white); }
+    .hero-title .word-night {
+      background: linear-gradient(90deg, var(--blue), var(--mint));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-title .word-girls {
+      background: linear-gradient(90deg, var(--purple), #ff6ac1);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      margin-top: 28px;
+      font-size: 1rem; color: var(--off-white); font-weight: 300;
+      line-height: 1.7; max-width: 480px;
+      opacity: 0;
+    }
+    .hero-cta {
+      margin-top: 40px; display: flex; gap: 16px; flex-wrap: wrap;
+      opacity: 0;
+    }
+    .btn-primary {
+      padding: 14px 34px;
+      background: linear-gradient(135deg, var(--blue), var(--mint));
+      border: none; border-radius: 50px;
+      color: #04040f; font-family: 'Rajdhani', sans-serif;
+      font-size: .95rem; font-weight: 700; letter-spacing: .1em;
+      cursor: none; transition: transform .3s, box-shadow .3s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 40px rgba(0,245,200,.4);
+    }
+    .btn-ghost {
+      padding: 14px 34px;
+      background: transparent;
+      border: 1.5px solid var(--purple);
+      border-radius: 50px;
+      color: var(--purple); font-family: 'Rajdhani', sans-serif;
+      font-size: .95rem; font-weight: 700; letter-spacing: .1em;
+      cursor: none; transition: all .3s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-ghost:hover {
+      background: var(--purple); color: #fff;
+      box-shadow: 0 0 30px rgba(155,93,229,.5);
+      transform: translateY(-3px);
+    }
+
+    .hero-logo {
+      position: absolute; right: 6%; top: 50%; transform: translateY(-50%);
+      z-index: 2; opacity: 0;
+    }
+    .hero-logo img {
+      width: clamp(200px, 22vw, 320px);
+      border-radius: 24px;
+      box-shadow: 0 0 60px rgba(0,245,200,.3), 0 0 120px rgba(155,93,229,.2);
+    }
+    .hero-logo-ring {
+      position:absolute; inset:-20px; border-radius:44px;
+      border: 1px solid rgba(0,245,200,.2);
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+    .hero-logo-ring-2 {
+      position:absolute; inset:-40px; border-radius:64px;
+      border: 1px solid rgba(155,93,229,.15);
+      animation: ringPulse 3s ease-in-out infinite .8s;
+    }
+    @keyframes ringPulse {
+      0%,100% { opacity:.3; transform:scale(1); }
+      50% { opacity:1; transform:scale(1.02); }
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      font-family:'Rajdhani', sans-serif; font-size:.7rem; letter-spacing:.2em;
+      color:rgba(255,255,255,.3); text-transform:uppercase;
+    }
+    .scroll-line {
+      width:1px; height:50px;
+      background: linear-gradient(to bottom, var(--mint), transparent);
+      animation: scrollDrop 2s ease-in-out infinite;
+    }
+    @keyframes scrollDrop {
+      0%   { transform:scaleY(0); transform-origin:top; }
+      50%  { transform:scaleY(1); transform-origin:top; }
+      51%  { transform:scaleY(1); transform-origin:bottom; }
+      100% { transform:scaleY(0); transform-origin:bottom; }
+    }
+
+    /* ═══════════════════════════════════
+       SECTION HEADERS
+    ═══════════════════════════════════ */
+    .sec-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: .72rem; letter-spacing: .4em; text-transform: uppercase;
+      color: var(--mint); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sec-label::before, .sec-label::after {
+      content:''; flex:1; max-width:40px; height:1px; background: var(--mint);
+    }
+    .sec-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700; text-align: center; line-height: 1;
+      margin-bottom: 60px;
+    }
+    .sec-title span {
+      background: linear-gradient(90deg, var(--blue), var(--mint), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    /* ═══════════════════════════════════
+       SONGS SECTION
+    ═══════════════════════════════════ */
+    #songs {
+      padding: 120px 6%;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    }
+    .song-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .song-card {
+      position: relative; overflow: hidden;
+      border-radius: 20px; cursor: none;
+      border: 1px solid rgba(0,245,200,.08);
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      transition: border-color .4s, transform .4s;
+      group: true;
+    }
+    .song-card::before {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(135deg, rgba(26,140,255,.15), rgba(155,93,229,.15));
+      opacity:0; transition: opacity .4s;
+    }
+    .song-card:hover { border-color: rgba(0,245,200,.4); }
+    .song-card:hover::before { opacity:1; }
+    .song-card img {
+      width:100%; aspect-ratio:1; object-fit:cover;
+      display:block; transition: transform .6s ease;
+    }
+    .song-card:hover img { transform: scale(1.08); }
+    .song-info {
+      padding: 16px 18px 20px;
+      position: relative; z-index:1;
+    }
+    .song-info span {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem; font-weight: 600;
+      letter-spacing: .05em; color: var(--white);
+    }
+    .play-icon {
+      position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%) scale(0);
+      width:56px; height:56px;
+      background: linear-gradient(135deg, var(--blue), var(--mint));
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.4rem; transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+      z-index:2; pointer-events:none;
+    }
+    .song-card:hover .play-icon { transform: translate(-50%,-50%) scale(1); }
+
+    /* ═══════════════════════════════════
+       GALLERY
+    ═══════════════════════════════════ */
+    #gallery {
+      padding: 120px 6%;
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .gallery-marquee-wrapper {
+      display:flex; flex-direction:column; gap:20px;
+      overflow:hidden;
+    }
+    .gallery-row {
+      display:flex; gap:20px; will-change:transform;
+    }
+    .gallery-row.row-2 { flex-direction:row-reverse; }
+    .gallery-item {
+      flex-shrink: 0;
+      width: 260px; height: 200px;
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(0,245,200,.08);
+      position: relative;
+    }
+    .gallery-item img {
+      width:100%; height:100%; object-fit:cover;
+      transition: transform .5s;
+    }
+    .gallery-item:hover img { transform: scale(1.1); }
+    .gallery-item::after {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(135deg, rgba(26,140,255,.2), rgba(0,245,200,.1));
+      opacity:0; transition:opacity .4s;
+    }
+    .gallery-item:hover::after { opacity:1; }
+
+    /* ═══════════════════════════════════
+       MEMBERS
+    ═══════════════════════════════════ */
+    #members {
+      padding: 120px 6%;
+      background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+    }
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 28px;
+    }
+    .member-card {
+      perspective: 1400px; cursor: none;
+      height: 440px;
+    }
+    .card-inner {
+      position:relative; width:100%; height:100%;
+      transform-style: preserve-3d;
+      transition: transform .85s cubic-bezier(.4,0,.2,1);
+    }
+    .member-card:hover .card-inner { transform: rotateY(180deg); }
+    .card-front, .card-back {
+      position:absolute; width:100%; height:100%;
+      border-radius: 22px; backface-visibility: hidden;
+      overflow: hidden;
+    }
+    .card-front {
+      background: var(--glass);
+      border: 1px solid rgba(155,93,229,.2);
+      display:flex; flex-direction:column;
+    }
+    .card-front img {
+      flex:1; width:100%; object-fit:cover;
+      transition: transform .6s;
+    }
+    .member-card:hover .card-front img { transform: scale(1.04); }
+    .card-front-label {
+      padding: 16px 20px;
+      background: rgba(0,0,0,.6);
+      backdrop-filter: blur(8px);
+    }
+    .card-front-label h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem; font-weight: 700; letter-spacing: .05em;
+    }
+    .card-front-label span {
+      font-size: .75rem; color: var(--mint);
+      font-family: 'Rajdhani', sans-serif; letter-spacing: .15em; text-transform:uppercase;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      padding: 28px 24px;
+      display:flex; flex-direction:column; gap:10px; justify-content:center;
+      background: linear-gradient(145deg, #0e0535 0%, #0a1a3a 50%, #031a14 100%);
+      border: 1px solid rgba(0,245,200,.3);
+    }
+    .card-back .back-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.6rem; font-weight: 700;
+      background: linear-gradient(90deg, var(--mint), var(--blue));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      margin-bottom: 6px;
+    }
+    .card-back p {
+      font-size: .85rem; color: var(--off-white);
+      line-height: 1.6;
+      border-left: 2px solid rgba(0,245,200,.3);
+      padding-left: 10px;
+    }
+    .member-number {
+      position:absolute; top:16px; right:16px;
+      font-family:'Rajdhani',sans-serif;
+      font-size:3rem; font-weight:700; line-height:1;
+      color:rgba(0,245,200,.06);
+      z-index:1; pointer-events:none;
+    }
+
+    /* ═══════════════════════════════════
+       STATS BAR
+    ═══════════════════════════════════ */
+    #stats {
+      padding: 80px 6%;
+      background: linear-gradient(90deg, rgba(26,140,255,.06), rgba(0,245,200,.04), rgba(155,93,229,.06));
+      border-top: 1px solid rgba(0,245,200,.08);
+      border-bottom: 1px solid rgba(155,93,229,.08);
+    }
+    .stats-grid {
+      display:flex; justify-content:center; flex-wrap:wrap; gap:60px;
+    }
+    .stat-item { text-align:center; }
+    .stat-num {
+      font-family:'Rajdhani',sans-serif;
+      font-size: clamp(3rem,5vw,5rem); font-weight:700; line-height:1;
+      background: linear-gradient(135deg, var(--mint), var(--blue));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .stat-label {
+      font-family:'Rajdhani',sans-serif;
+      font-size:.75rem; letter-spacing:.25em; text-transform:uppercase;
+      color:rgba(255,255,255,.4); margin-top:6px;
+    }
+
+    /* ═══════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════ */
+    footer {
+      padding: 60px 6% 40px;
+      background: var(--bg2);
+      border-top: 1px solid rgba(0,245,200,.06);
+      text-align:center;
+    }
+    .footer-logo {
+      font-family:'Rajdhani',sans-serif; font-size:1.6rem; font-weight:700;
+      background: linear-gradient(90deg, var(--mint), var(--blue), var(--purple));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      margin-bottom:16px;
+    }
+    .footer-text { font-size:.8rem; color:rgba(255,255,255,.25); letter-spacing:.08em; }
+
+    /* ═══════════════════════════════════
+       MUSIC PLAYER
+    ═══════════════════════════════════ */
+    #player {
+      display: none;
+      position: fixed; bottom:0; left:0; right:0;
+      z-index: 800;
+      background: rgba(4,4,15,.92);
+      backdrop-filter: blur(24px);
+      border-top: 1px solid rgba(0,245,200,.15);
+      padding: 12px 5%;
+      align-items: center; gap: 20px;
+      flex-wrap: wrap;
+    }
+    .player-song-info { min-width:160px; }
+    .player-song-name {
+      font-family:'Rajdhani',sans-serif; font-weight:700;
+      font-size:.95rem; letter-spacing:.05em;
+      background: linear-gradient(90deg,var(--mint),var(--blue));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .player-now { font-size:.68rem; color:rgba(255,255,255,.3); letter-spacing:.15em; text-transform:uppercase; }
+    .player-controls { display:flex; align-items:center; gap:12px; flex:1; min-width:280px; }
+    #playPauseBtn {
+      width:40px; height:40px;
+      background: linear-gradient(135deg,var(--blue),var(--mint));
+      border:none; border-radius:50%; cursor:none;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; color:#04040f;
+      transition: transform .2s, box-shadow .2s;
+      flex-shrink:0;
+    }
+    #playPauseBtn:hover { transform:scale(1.1); box-shadow:0 0 20px rgba(0,245,200,.5); }
+    .time-label { font-family:'Rajdhani',sans-serif; font-size:.78rem; color:rgba(255,255,255,.4); width:36px; text-align:center; flex-shrink:0; }
+    #progressBar {
+      flex:1; -webkit-appearance:none; appearance:none;
+      height:4px; border-radius:2px;
+      background: rgba(255,255,255,.1); cursor:none; outline:none;
+    }
+    #progressBar::-webkit-slider-thumb {
+      -webkit-appearance:none; width:14px; height:14px;
+      border-radius:50%; background:var(--mint);
+      cursor:none; box-shadow:0 0 8px var(--mint);
+    }
+    .player-vol { display:flex; align-items:center; gap:8px; }
+    .vol-icon { font-size:.9rem; color:rgba(255,255,255,.4); }
+    #volumeControl {
+      width:80px; -webkit-appearance:none; appearance:none;
+      height:4px; border-radius:2px;
+      background: rgba(255,255,255,.1); cursor:none; outline:none;
+    }
+    #volumeControl::-webkit-slider-thumb {
+      -webkit-appearance:none; width:12px; height:12px;
+      border-radius:50%; background:var(--purple); cursor:none;
+    }
+
+    /* ═══════════════════════════════════
+       SECTION PADDING & VISIBILITY
+    ═══════════════════════════════════ */
+    .reveal { opacity:0; transform:translateY(40px); }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════ */
+    @media(max-width:900px){
+      .hero-logo { position:static; transform:none; margin-bottom:40px; text-align:center; }
+      .hero { flex-direction:column-reverse; gap:40px; padding-top:120px; padding-bottom:80px; align-items:center; }
+      .nav-links { display:none; }
+    }
+    @media(max-width:600px){
+      .sec-title { margin-bottom:40px; }
+      .hero-title { font-size:3rem; }
+      .gallery-item { width:180px; height:140px; }
+    }
+  </style>
 </head>
-
 <body>
 
-    <!-- Background Intro Audio -->
-    <audio id="introAudio" src="intro.mp3"></audio>
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="left-text typing">
-            The Darknight Girls
-        </div>
-        <div class="logo">
-            <img src="logo.png" alt="Band Logo">
-        </div>
-    </section>
+<!-- Stars canvas -->
+<canvas id="stars-canvas"></canvas>
 
-    <!-- SONGS -->
-    <section class="section">
-        <h2>Our Songs</h2>
-        <div class="song-list">
-            <div class="song-card" onclick="playSong('song1.mp3','The Darknight Girls')">
-                <img src="cover1.png" alt="The Darknight Girls Cover">
-                <span>The Darknight Girls</span>
-            </div>
-            <div class="song-card" onclick="playSong('song2.mp3','The Darknight Girls Remake')">
-                <img src="cover2.png" alt="Anthem Remake Cover">
-                <span>Anthem Remake</span>
-            </div>
-            <div class="song-card" onclick="playSong('song3.mp3','Pretty Mafia')">
-                <img src="cover3.png" alt="Pretty Mafia Cover">
-                <span>Pretty Mafia</span>
-            </div>
-            <div class="song-card" onclick="playSong('song4.mp3','Pretty Mafia Remake')">
-                <img src="cover4.png" alt="Pretty Mafia Remake Cover">
-                <span>Pretty Mafia Remake</span>
-            </div>
-        </div>
-    </section>
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo">TDG</div>
+  <ul class="nav-links">
+    <li><a href="#songs">Songs</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#members">Members</a></li>
+  </ul>
+</nav>
 
-    <!-- GALLERY -->
-    <section class="section">
-        <h2>K-Pop Collages</h2>
-        <div class="gallery">
-            <img src="collage1.jpeg">
-            <img src="collage2.jpeg">
-            <img src="collage3.jpeg">
-            <img src="collage4.jpeg">
-            <img src="collage5.jpeg">
-            <img src="collage6.jpeg">
-            <img src="collage7.jpeg">
-            <img src="collage8.jpeg">
-            <img src="collage9.jpeg">
-            <img src="collage10.jpeg">
-            <img src="collage11.jpeg">
-            <img src="collage12.jpeg">
-            <img src="collage13.jpeg">
-            <img src="collage14.jpeg">
-            <img src="collage15.jpeg">
-            <img src="collage16.jpeg">
-            <img src="collage17.jpeg">
-            <img src="collage18.jpeg">
-            <img src="collage19.jpeg">
-            <img src="collage20.jpeg">
-            <img src="collage21.jpeg">
-            <img src="collage22.jpeg">
-            <img src="collage23.jpeg">
-            <img src="collage24.jpeg">
-            <img src="collage25.jpeg">
-            <img src="collage26.jpeg">
-            <img src="collage27.jpeg">
-            <img src="collage28.jpeg">
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-grid"></div>
 
-        </div>
-    </section>
-
-    <section class="section">
-        <h2>Band Members</h2>
-        <div class="members">
-
-            <!-- Member 1 -->
-            <div class="member-card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="model1.png" alt="Bea">
-                        <h3>Bea | Leader</h3>
-                    </div>
-                    <div class="card-back">
-                        <p>Age: 18</p>
-                        <p> Owl | German</p>
-                        <p>Fav Song: Universe</p>
-                        <p>Brown Eyes | Model for Pandora</p>
-                        <p>Still Makes Funny Stupid Things</p>
-                        <p>Mother Of Group | Short Dark Purple Hair</p>
-                        <p>Speaks: Korean, German, English, Japanese</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Member 2 -->
-            <div class="member-card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="model2.png" alt="Mony">
-                        <h3>Mony | Main Dancer</h3>
-                    </div>
-                    <div class="card-back">
-                        <p>Age: 17</p>
-                        <p> Bat | Makes Chores | Korean</p>
-                        <p>Brown Eyes | Model for Louis Vuitton</p>
-                        <p>Easy To Annoy | Touches Boobs And Asses From Members</p>
-                        <p>Shoulder-Length Black Hair</p>
-                        <p>Speaks: Korean, English, Japanese</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Member 3 -->
-            <div class="member-card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="model3.png" alt="Chloe">
-                        <h3>Chloe | Song Writer</h3>
-                    </div>
-                    <div class="card-back">
-                        <p>Age: 17</p>
-                        <p>Chameleon | Rapper | Korean</p>
-                        <p>Fav Song: Glow</p>
-                        <p>Blue Eyes | Model for Prada</p>
-                        <p>Blonde Hair Ponytail Always | Loves To Wear Colourful Lenses</p>
-                        <p>Speaks: Korean, English, Japanese</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Member 4 -->
-            <div class="member-card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="model4.png" alt="Hanna">
-                        <h3>Hanna | Singer </h3>
-                    </div>
-                    <div class="card-back">
-                        <p>Age: 16</p>
-                        <p>Bcedgie | Song writer | Korean</p>
-                        <p>Fav Song: Sparkle</p>
-                        <p>Light Brown Eyes | Model for Gucci</p>
-                        <p>Little Daram Queen</p>
-                        <p>Short Blue/Blonde Shoulder-Length Hair | Colourful Lenses</p>
-                        <p>Speaks: Korean, English</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Member 5 -->
-            <div class="member-card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="model5.png" alt="Jenna">
-                        <h3>Jenna | Rapper </h3>
-                    </div>
-                    <div class="card-back">
-                        <p>Age: 16</p>
-                        <p>Brown Bear | Korean/American</p>
-                        <p>Fav Song: Shine Bright</p>
-                        <p>Model for Converse</p>
-                        <p>Loves To Sing | Spirited</p>
-                        <p>Brown Hair Loose Shoulder-Length Hair</p>
-                        <p>Speaks: Korean, English</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Member 6 -->
-            <div class="member-card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="model6.png" alt="Nicki">
-                        <h3>Nicki | Singer </h3>
-                    </div>
-                    <div class="card-back">
-                        <p>Age: 15</p>
-                        <p>Capybara Rapper | Songwriter | German</p>
-                        <p>Fav Song: Darkness</p>
-                        <p>Model for Tom Tailor</p>
-                        <p>Loves Baggy Clothes | Stands Up For Other | Wears A Translator</p>
-                        <p>Blonde Hair, Waist-Length | Blue Eyes | Deep, High-Range Voice</p>
-                        <p>Speaks: German, English</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Member 7 -->
-            <div class="member-card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="model7.png" alt="Soonie">
-                        <h3>Soonie | Rapper</h3>
-                    </div>
-                    <div class="card-back">
-                        <p>Age: 15</p>
-                        <p>Cat | Korean/Italian</p>
-                        <p>Fav Song: Myself</p>
-                        <p>Model for Ralph Lauren</p>
-                        <p>Lovely/Complex | Sadistic | Lives To Laugh </p>
-                        <p>Light Brown Hair Little Longer Than Shoulder</p>
-                        <p>Speaks: Korean, English, German, Italian, Japanese</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Member 8 -->
-            <div class="member-card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="model8.png" alt="Iveen">
-                        <h3>Iveen | Singer </h3>
-                    </div>
-                    <div class="card-back">
-                        <p>Age: 15</p>
-                        <p>Racoon | Korean</p>
-                        <p>Fav Song: Everywhere</p>
-                        <p>Model for Converse</p>
-                        <p>Youngest | Childish | Little Ears | Playful</p>
-                        <p>Red Hair | Green Eyes</p>
-                        <p>Speaks: Korean, English</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Sticky Music Player -->
-    <div class="music-player">
-        <div class="player-left">
-            <span id="nowPlaying">No song playing</span>
-        </div>
-
-        <div class="player-center">
-            <button id="playPauseBtn">▶</button>
-            <span id="currentTime">0:00</span>
-
-            <input type="range" id="progressBar" value="0" min="0" max="100">
-
-            <span id="duration">0:00</span>
-        </div>
-
-        <div class="player-right">
-            🔊
-            <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="1">
-        </div>
+  <div class="hero-content">
+    <div class="hero-kicker" id="heroKicker">K-Pop · The Future · Now</div>
+    <h1 class="hero-title" id="heroTitle">
+      <span class="line"><span class="word-dark">The</span></span>
+      <span class="line"><span class="word-night">Darknight</span></span>
+      <span class="line"><span class="word-girls">Girls</span></span>
+    </h1>
+    <p class="hero-sub" id="heroSub">
+      Eight voices. One unstoppable force.<br>
+      The future of K-pop is <em>dark, bold, and electric.</em>
+    </p>
+    <div class="hero-cta" id="heroCta">
+      <a href="#songs" class="btn-primary">Listen Now</a>
+      <a href="#members" class="btn-ghost">Meet the Girls</a>
     </div>
-    <script>
+  </div>
 
-        let audio = new Audio();
-        let isPlaying = false;
+  <div class="hero-logo" id="heroLogo">
+    <div class="hero-logo-ring"></div>
+    <div class="hero-logo-ring-2"></div>
+    <img src="logo.png" alt="The Darknight Girls Logo" />
+  </div>
 
-        const playPauseBtn = document.getElementById("playPauseBtn");
-        const progressBar = document.getElementById("progressBar");
-        const volumeControl = document.getElementById("volumeControl");
-        const currentTimeEl = document.getElementById("currentTime");
-        const durationEl = document.getElementById("duration");
-        const nowPlaying = document.getElementById("nowPlaying");
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
 
-        /* PLAY SONG FUNCTION */
-        function playSong(src, name) {
-            audio.src = src;
-            audio.play();
-            isPlaying = true;
-            playPauseBtn.innerText = "⏸";
-            nowPlaying.innerText = "Now Playing: " + name;
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item"><div class="stat-num" data-count="8">0</div><div class="stat-label">Members</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="4">0</div><div class="stat-label">Songs</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="28">0</div><div class="stat-label">Gallery Images</div></div>
+    <div class="stat-item"><div class="stat-num" data-count="5">0</div><div class="stat-label">Languages</div></div>
+  </div>
+</section>
 
-            // Show music player
-            document.querySelector('.music-player').style.display = 'flex';
-        }
+<!-- SONGS -->
+<section id="songs">
+  <div class="sec-label" style="justify-content:center">Our Music</div>
+  <h2 class="sec-title reveal">Listen to the <span>Darknight Sound</span></h2>
+  <div class="song-grid">
+    <div class="song-card reveal" onclick="playSong('song1.mp3','The Darknight Girls')">
+      <img src="cover1.png" alt="The Darknight Girls" loading="lazy">
+      <div class="play-icon">▶</div>
+      <div class="song-info"><span>The Darknight Girls</span></div>
+    </div>
+    <div class="song-card reveal" onclick="playSong('song2.mp3','Anthem Remake')">
+      <img src="cover2.png" alt="Anthem Remake" loading="lazy">
+      <div class="play-icon">▶</div>
+      <div class="song-info"><span>Anthem Remake</span></div>
+    </div>
+    <div class="song-card reveal" onclick="playSong('song3.mp3','Pretty Mafia')">
+      <img src="cover3.png" alt="Pretty Mafia" loading="lazy">
+      <div class="play-icon">▶</div>
+      <div class="song-info"><span>Pretty Mafia</span></div>
+    </div>
+    <div class="song-card reveal" onclick="playSong('song4.mp3','Pretty Mafia Remake')">
+      <img src="cover4.png" alt="Pretty Mafia Remake" loading="lazy">
+      <div class="play-icon">▶</div>
+      <div class="song-info"><span>Pretty Mafia Remake</span></div>
+    </div>
+  </div>
+</section>
 
-        /* PLAY / PAUSE TOGGLE */
-        playPauseBtn.addEventListener("click", () => {
-            if (isPlaying) {
-                audio.pause();
-                playPauseBtn.innerText = "▶";
-            } else {
-                audio.play();
-                playPauseBtn.innerText = "⏸";
-            }
-            isPlaying = !isPlaying;
-        });
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="sec-label" style="justify-content:center">Visual World</div>
+  <h2 class="sec-title reveal">K-Pop <span>Collages</span></h2>
+  <div class="gallery-marquee-wrapper" id="galleryWrapper">
+    <div class="gallery-row" id="row1">
+      <!-- JS fills these -->
+    </div>
+    <div class="gallery-row row-2" id="row2"></div>
+    <div class="gallery-row" id="row3"></div>
+  </div>
+</section>
 
-        /* UPDATE PROGRESS BAR */
-        audio.addEventListener("timeupdate", () => {
-            const progressPercent = (audio.currentTime / audio.duration) * 100;
-            progressBar.value = progressPercent;
+<!-- MEMBERS -->
+<section id="members">
+  <div class="sec-label" style="justify-content:center">The Squad</div>
+  <h2 class="sec-title reveal">Meet the <span>Girls</span></h2>
+  <div class="members-grid">
 
-            currentTimeEl.innerText = formatTime(audio.currentTime);
-            durationEl.innerText = formatTime(audio.duration);
-        });
+    <div class="member-card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="model1.png" alt="Bea">
+          <div class="member-number">01</div>
+          <div class="card-front-label">
+            <h3>Bea</h3>
+            <span>Leader</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="back-name">Bea</div>
+          <p>Age 18 · German · Owl</p>
+          <p>Fav Song: Universe</p>
+          <p>Brown Eyes · Model for Pandora</p>
+          <p>Short Dark Purple Hair</p>
+          <p>Mother of the Group</p>
+          <p>Korean · German · English · Japanese</p>
+        </div>
+      </div>
+    </div>
 
-        /* CLICK TO SEEK */
-        progressBar.addEventListener("input", () => {
-            audio.currentTime = (progressBar.value / 100) * audio.duration;
-        });
+    <div class="member-card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="model2.png" alt="Mony">
+          <div class="member-number">02</div>
+          <div class="card-front-label">
+            <h3>Mony</h3>
+            <span>Main Dancer</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="back-name">Mony</div>
+          <p>Age 17 · Korean · Bat</p>
+          <p>Brown Eyes · Model for Louis Vuitton</p>
+          <p>Easy To Annoy</p>
+          <p>Shoulder-Length Black Hair</p>
+          <p>Korean · English · Japanese</p>
+        </div>
+      </div>
+    </div>
 
-        /* VOLUME CONTROL */
-        volumeControl.addEventListener("input", () => {
-            audio.volume = volumeControl.value;
-        });
+    <div class="member-card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="model3.png" alt="Chloe">
+          <div class="member-number">03</div>
+          <div class="card-front-label">
+            <h3>Chloe</h3>
+            <span>Song Writer</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="back-name">Chloe</div>
+          <p>Age 17 · Korean · Chameleon</p>
+          <p>Fav Song: Glow</p>
+          <p>Blue Eyes · Model for Prada</p>
+          <p>Blonde Ponytail · Loves Colourful Lenses</p>
+          <p>Korean · English · Japanese</p>
+        </div>
+      </div>
+    </div>
 
-        /* FORMAT TIME FUNCTION */
-        function formatTime(time) {
-            if (isNaN(time)) return "0:00";
-            const minutes = Math.floor(time / 60);
-            const seconds = Math.floor(time % 60);
-            return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-        }
-        const introAudio = document.getElementById('introAudio');
-        let introPlayed = false;
+    <div class="member-card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="model4.png" alt="Hanna">
+          <div class="member-number">04</div>
+          <div class="card-front-label">
+            <h3>Hanna</h3>
+            <span>Singer</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="back-name">Hanna</div>
+          <p>Age 16 · Korean · Bdedgie</p>
+          <p>Fav Song: Sparkle</p>
+          <p>Light Brown Eyes · Model for Gucci</p>
+          <p>Little Drama Queen</p>
+          <p>Short Blue/Blonde Hair · Colourful Lenses</p>
+          <p>Korean · English</p>
+        </div>
+      </div>
+    </div>
 
-        document.addEventListener('click', () => {
-            if (!introPlayed) {
-                introAudio.play().catch(err => console.log('User interaction needed to play audio', err));
-                introPlayed = true;
-            }
-        });
-    </script>
+    <div class="member-card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="model5.png" alt="Jenna">
+          <div class="member-number">05</div>
+          <div class="card-front-label">
+            <h3>Jenna</h3>
+            <span>Rapper</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="back-name">Jenna</div>
+          <p>Age 16 · Korean/American</p>
+          <p>Brown Bear · Model for Converse</p>
+          <p>Fav Song: Shine Bright</p>
+          <p>Loves To Sing · Spirited</p>
+          <p>Brown Loose Shoulder-Length Hair</p>
+          <p>Korean · English</p>
+        </div>
+      </div>
+    </div>
 
+    <div class="member-card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="model6.png" alt="Nicki">
+          <div class="member-number">06</div>
+          <div class="card-front-label">
+            <h3>Nicki</h3>
+            <span>Singer</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="back-name">Nicki</div>
+          <p>Age 15 · German · Capybara</p>
+          <p>Fav Song: Darkness</p>
+          <p>Model for Tom Tailor</p>
+          <p>Loves Baggy Clothes · Wears A Translator</p>
+          <p>Blonde Waist-Length Hair · Blue Eyes</p>
+          <p>Deep, High-Range Voice</p>
+          <p>German · English</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="member-card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="model7.png" alt="Soonie">
+          <div class="member-number">07</div>
+          <div class="card-front-label">
+            <h3>Soonie</h3>
+            <span>Rapper</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="back-name">Soonie</div>
+          <p>Age 15 · Korean/Italian · Cat</p>
+          <p>Fav Song: Myself</p>
+          <p>Model for Ralph Lauren</p>
+          <p>Lovely/Complex · Sadistic · Lives To Laugh</p>
+          <p>Light Brown Shoulder-Length Hair</p>
+          <p>Korean · English · German · Italian · Japanese</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="member-card reveal">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="model8.png" alt="Iveen">
+          <div class="member-number">08</div>
+          <div class="card-front-label">
+            <h3>Iveen</h3>
+            <span>Singer</span>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="back-name">Iveen</div>
+          <p>Age 15 · Korean · Racoon</p>
+          <p>Fav Song: Everywhere</p>
+          <p>Model for Converse</p>
+          <p>Youngest · Childish · Playful</p>
+          <p>Red Hair · Green Eyes</p>
+          <p>Korean · English</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">The Darknight Girls</div>
+  <p class="footer-text">Fan site · Made with love · All content belongs to respective owners</p>
+</footer>
+
+<!-- MUSIC PLAYER -->
+<div id="player">
+  <div class="player-song-info">
+    <div class="player-now">Now Playing</div>
+    <div class="player-song-name" id="nowPlaying">—</div>
+  </div>
+  <div class="player-controls">
+    <button id="playPauseBtn">▶</button>
+    <span class="time-label" id="currentTime">0:00</span>
+    <input type="range" id="progressBar" value="0" min="0" max="100" />
+    <span class="time-label" id="duration">0:00</span>
+  </div>
+  <div class="player-vol">
+    <span class="vol-icon">🔊</span>
+    <input type="range" id="volumeControl" min="0" max="1" step="0.05" value="1" />
+  </div>
+</div>
+
+<!-- Background intro audio -->
+<audio id="introAudio" src="intro.mp3"></audio>
+
+<script>
+gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+/* ── STARS ── */
+(function(){
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  function init(){
+    resize();
+    stars = Array.from({length:160}, () => ({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      r: Math.random()*1.4+.3,
+      speed: Math.random()*.25+.05,
+      opacity: Math.random()*.6+.2,
+      color: ['#1a8cff','#00f5c8','#9b5de5','#ffffff'][Math.floor(Math.random()*4)]
+    }));
+  }
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    stars.forEach(s=>{
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = s.color;
+      ctx.globalAlpha = s.opacity;
+      ctx.fill();
+      s.y -= s.speed;
+      if(s.y < -2){ s.y = canvas.height+2; s.x = Math.random()*canvas.width; }
+    });
+    ctx.globalAlpha=1;
+    requestAnimationFrame(draw);
+  }
+  init(); draw();
+  window.addEventListener('resize', init);
+})();
+
+/* ── CURSOR ── */
+(function(){
+  const dot = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-trail');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+  gsap.ticker.add(()=>{
+    dot.style.left = mx+'px'; dot.style.top = my+'px';
+    rx += (mx-rx)*.12; ry += (my-ry)*.12;
+    ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  });
+  document.querySelectorAll('a,button,.song-card,.member-card,[onclick]').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{
+      gsap.to(dot,{scale:2.5,duration:.3});
+      gsap.to(ring,{scale:1.5,borderColor:'#00f5c8',duration:.3});
+    });
+    el.addEventListener('mouseleave',()=>{
+      gsap.to(dot,{scale:1,duration:.3});
+      gsap.to(ring,{scale:1,borderColor:'#9b5de5',duration:.3});
+    });
+  });
+})();
+
+/* ── HERO ENTRANCE ── */
+window.addEventListener('load', ()=>{
+  const tl = gsap.timeline({defaults:{ease:'power3.out'}});
+  tl.fromTo('#heroLogo',{opacity:0,x:80},{opacity:1,x:0,duration:1.1},0)
+    .fromTo('#heroKicker',{opacity:0,y:20},{opacity:1,y:0,duration:.7},.3)
+    .fromTo('#heroTitle',{opacity:0,y:60},{opacity:1,y:0,duration:1},.5)
+    .fromTo('#heroSub',{opacity:0,y:30},{opacity:1,y:0,duration:.8},.9)
+    .fromTo('#heroCta',{opacity:0,y:20},{opacity:1,y:0,duration:.7},1.1);
+
+  /* nav */
+  gsap.fromTo('#mainNav',{opacity:0,y:-20},{opacity:1,y:0,duration:.8,delay:.2});
+});
+
+/* ── ORB MOUSE PARALLAX ── */
+document.addEventListener('mousemove', e=>{
+  const rx = (e.clientX/window.innerWidth-.5)*30;
+  const ry = (e.clientY/window.innerHeight-.5)*30;
+  gsap.to('.orb-1',{x:rx*.8,y:ry*.8,duration:1.5,ease:'power1.out'});
+  gsap.to('.orb-2',{x:-rx*.6,y:-ry*.6,duration:1.5,ease:'power1.out'});
+  gsap.to('.orb-3',{x:rx*.4,y:ry*.4,duration:1.5,ease:'power1.out'});
+});
+
+/* ── SCROLL REVEALS ── */
+gsap.utils.toArray('.reveal').forEach((el,i)=>{
+  gsap.fromTo(el,
+    {opacity:0,y:50},
+    {opacity:1,y:0,duration:.8,delay:(i%4)*.12,ease:'power3.out',
+     scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}}
+  );
+});
+
+/* ── STATS COUNTER ── */
+document.querySelectorAll('.stat-num').forEach(el=>{
+  const target = +el.dataset.count;
+  ScrollTrigger.create({
+    trigger: el, start:'top 85%', once:true,
+    onEnter(){
+      gsap.fromTo({val:0},{val:target},{
+        val:target, duration:1.6, ease:'power2.out',
+        onUpdate(){ el.textContent = Math.round(this.targets()[0].val); }
+      });
+    }
+  });
+});
+
+/* ── GALLERY MARQUEE ── */
+(function(){
+  const imgs = Array.from({length:28},(_,i)=>`collage${i+1}.jpeg`);
+  const chunk = n => imgs.reduce((acc,_,i)=>i%n===0?[...acc,imgs.slice(i,i+n)]:acc,[]);
+  const thirds = chunk(Math.ceil(imgs.length/3));
+
+  function buildRow(rowEl, items, duplicate=true){
+    const set = duplicate ? [...items,...items] : items;
+    set.forEach(src=>{
+      const d = document.createElement('div'); d.className='gallery-item';
+      const img = document.createElement('img'); img.src=src; img.alt='';
+      d.appendChild(img); rowEl.appendChild(d);
+    });
+  }
+  buildRow(document.getElementById('row1'), thirds[0]||[]);
+  buildRow(document.getElementById('row2'), thirds[1]||[]);
+  buildRow(document.getElementById('row3'), thirds[2]||[]);
+
+  /* GSAP infinite scroll */
+  function marqueeTween(rowEl, dir=1, dur=30){
+    const w = rowEl.scrollWidth/2;
+    gsap.to(rowEl,{x: dir*-w, duration:dur, ease:'none', repeat:-1,
+      modifiers:{ x: gsap.utils.unitize(x=> parseFloat(x) % w * dir < 0 ? parseFloat(x) % w : parseFloat(x) % w ) }
+    });
+    /* simple approach */
+    gsap.fromTo(rowEl,{x:0},{x:dir*-w, duration:dur, ease:'none', repeat:-1});
+  }
+  marqueeTween(document.getElementById('row1'), 1, 35);
+  marqueeTween(document.getElementById('row2'), -1, 40);
+  marqueeTween(document.getElementById('row3'), 1, 28);
+})();
+
+/* ── MUSIC PLAYER ── */
+const audio = new Audio();
+let isPlaying = false;
+const playBtn = document.getElementById('playPauseBtn');
+const progressBar = document.getElementById('progressBar');
+const volCtrl = document.getElementById('volumeControl');
+const curTimeEl = document.getElementById('currentTime');
+const durEl = document.getElementById('duration');
+const nowPlayingEl = document.getElementById('nowPlaying');
+
+function playSong(src, name){
+  audio.src = src; audio.play();
+  isPlaying = true; playBtn.textContent='⏸';
+  nowPlayingEl.textContent = name;
+  const p = document.getElementById('player');
+  p.style.display = 'flex';
+  gsap.fromTo(p,{y:60,opacity:0},{y:0,opacity:1,duration:.5,ease:'power3.out'});
+}
+playBtn.addEventListener('click',()=>{
+  isPlaying ? audio.pause() : audio.play();
+  playBtn.textContent = isPlaying ? '▶' : '⏸';
+  isPlaying = !isPlaying;
+});
+audio.addEventListener('timeupdate',()=>{
+  if(!isNaN(audio.duration)){
+    progressBar.value = (audio.currentTime/audio.duration)*100;
+    curTimeEl.textContent = fmt(audio.currentTime);
+    durEl.textContent = fmt(audio.duration);
+  }
+});
+progressBar.addEventListener('input',()=>{ audio.currentTime=(progressBar.value/100)*audio.duration; });
+volCtrl.addEventListener('input',()=>{ audio.volume=volCtrl.value; });
+function fmt(t){ if(isNaN(t))return'0:00'; const m=Math.floor(t/60),s=Math.floor(t%60); return m+':'+(s<10?'0':'')+s; }
+
+/* intro audio */
+let introPlayed=false;
+document.addEventListener('click',()=>{
+  if(!introPlayed){ document.getElementById('introAudio').play().catch(()=>{}); introPlayed=true; }
+},{once:true});
+
+/* ── SECTION TITLE GLOW ON SCROLL ── */
+gsap.utils.toArray('.sec-title').forEach(el=>{
+  ScrollTrigger.create({
+    trigger:el, start:'top 80%', once:true,
+    onEnter(){
+      gsap.fromTo(el,{opacity:0,y:30},{opacity:1,y:0,duration:.9,ease:'power3.out'});
+    }
+  });
+});
+</script>
 </body>
-
 </html>
